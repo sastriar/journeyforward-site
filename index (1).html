@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JourneyForward — Your Journey Is a Story Worth Telling</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --cream: #F7F3EE; --warm: #FDFAF6; --ink: #1C1713;
+  --brown: #6B4C35; --gold: #C9963A; --gold-l: #E8C97A;
+  --muted: #8C7B6E; --text: #2E2520; --border: rgba(107,76,53,0.15);
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--ink); color: var(--ink); overflow-x: hidden; -webkit-text-size-adjust: 100%; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 1.25rem;
+  background: rgba(28,23,19,0.93); backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(201,150,58,0.1);
+}
+.nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; font-weight: 600; color: white; }
+.nav-logo span { color: var(--gold); }
+.nav-cta {
+  background: var(--gold); color: var(--ink); border: none;
+  padding: 0.5rem 0.9rem; border-radius: 2px; cursor: pointer;
+  font-family: 'DM Sans', sans-serif; font-size: 0.72rem; font-weight: 500;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  transition: background 0.2s; -webkit-tap-highlight-color: transparent;
+  white-space: nowrap;
+}
+.nav-cta:hover { background: var(--gold-l); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100svh;
+  background: linear-gradient(168deg, #080503 0%, #110905 15%, #221208 32%, #3E2008 50%, #68350E 68%, #965018 82%, #BB6A24 93%, #CA7830 100%);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 7rem 1.5rem 5rem;
+  position: relative; overflow: hidden; text-align: center;
+}
+.hero-grain { position: absolute; inset: 0; opacity: 0.038; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-size: 220px; pointer-events: none; }
+.hero-glow { position: absolute; inset: 0; background: radial-gradient(ellipse 65% 55% at 75% 18%, rgba(201,150,58,0.07) 0%, transparent 55%), radial-gradient(ellipse 55% 65% at 12% 88%, rgba(107,48,16,0.12) 0%, transparent 50%); pointer-events: none; }
+
+.hero-inner { position: relative; z-index: 1; width: 100%; max-width: 520px; }
+
+.hero-hl {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.6rem, 10vw, 5.5rem);
+  font-weight: 300; line-height: 1.08;
+  color: white; margin-bottom: 1rem;
+  animation: fu 1s ease both;
+}
+.hero-hl em { font-style: italic; color: var(--gold-l); }
+
+.hero-hl2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1rem, 3vw, 1.35rem);
+  font-weight: 300; font-style: italic;
+  color: rgba(247,243,238,0.5); line-height: 1.6;
+  margin-bottom: 2rem;
+  animation: fu 1s 0.2s ease both;
+}
+
+/* Stacked inputs — mobile native */
+.hero-form-wrap { animation: fu 1s 0.35s ease both; }
+.hero-form input {
+  width: 100%; padding: 1rem 1.25rem;
+  border: 1px solid rgba(255,255,255,0.1); border-radius: 3px 3px 0 0;
+  background: rgba(255,255,255,0.08); color: white;
+  font-family: 'DM Sans', sans-serif; font-size: 1rem;
+  outline: none; -webkit-appearance: none;
+}
+.hero-form input::placeholder { color: rgba(247,243,238,0.28); }
+.hero-form button {
+  width: 100%; padding: 1rem;
+  background: var(--gold); color: var(--ink); border: none;
+  border-radius: 0 0 3px 3px; font-family: 'DM Sans', sans-serif;
+  font-size: 0.88rem; font-weight: 500; letter-spacing: 0.04em;
+  cursor: pointer; transition: background 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.hero-form button:hover { background: var(--gold-l); }
+
+.hero-note {
+  font-size: 0.7rem; color: rgba(247,243,238,0.25);
+  margin-top: 0.75rem; line-height: 1.6;
+  animation: fu 1s 0.45s ease both;
+}
+.hero-note a { color: rgba(247,243,238,0.38); cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
+.hero-note a:hover { color: var(--gold-l); }
+
+.success-msg { display: none; padding: 1rem; font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-style: italic; color: var(--gold); text-align: center; }
+
+.hero-see {
+  margin-top: 2.5rem; cursor: pointer;
+  animation: fu 1s 0.55s ease both;
+  -webkit-tap-highlight-color: transparent;
+}
+.hero-see-inner {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(247,243,238,0.22); transition: color 0.2s;
+}
+.hero-see-inner:hover { color: rgba(247,243,238,0.5); }
+.hero-see-inner::before, .hero-see-inner::after { content: ''; width: 22px; height: 1px; background: rgba(247,243,238,0.14); }
+
+.scroll-hint { position: absolute; bottom: 1.75rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.35rem; }
+.scroll-hint span { font-size: 0.52rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(247,243,238,0.18); }
+.scroll-tick { width: 1px; height: 28px; background: linear-gradient(to bottom, rgba(201,150,58,0.45), transparent); animation: sp 2.5s ease-in-out infinite; }
+
+@keyframes fu { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+@keyframes sp { 0%,100%{opacity:.25} 50%{opacity:.8} }
+
+/* ── CAPSULE SECTION ── */
+.capsule-section {
+  background: linear-gradient(180deg, #0A0603 0%, #130C06 60%, #1A0E07 100%);
+  padding: 0 1.5rem 4rem;
+  border-top: 1px solid rgba(201,150,58,0.06);
+}
+.cap-intro { padding: 3.5rem 0 2.5rem; text-align: center; }
+.cap-intro-label { font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); opacity: 0.6; margin-bottom: 0.75rem; }
+.cap-intro-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.5rem, 5vw, 2.2rem); font-weight: 300; color: white; line-height: 1.2; margin-bottom: 0.4rem; }
+.cap-intro-title em { font-style: italic; color: var(--gold-l); }
+.cap-intro-sub { font-size: 0.78rem; color: rgba(247,243,238,0.3); letter-spacing: 0.06em; }
+
+.cap-card { max-width: 420px; margin: 0 auto; border: 1px solid rgba(201,150,58,0.12); border-radius: 4px; overflow: hidden; }
+.cap-head { background: rgba(201,150,58,0.05); border-bottom: 1px solid rgba(201,150,58,0.1); padding: 1.75rem 1.5rem; position: relative; }
+.cap-head::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent, var(--gold), transparent); opacity: 0.45; }
+.cap-head-label { font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); opacity: 0.65; margin-bottom: 0.5rem; }
+.cap-head-name { font-family: 'Cormorant Garamond', serif; font-size: 1.65rem; font-weight: 300; color: white; line-height: 1.1; margin-bottom: 0.25rem; }
+.cap-head-span { font-size: 0.6rem; color: rgba(247,243,238,0.3); letter-spacing: 0.1em; text-transform: uppercase; }
+
+/* Journey map */
+.cap-map { padding: 1.4rem 1.5rem; border-bottom: 1px solid rgba(201,150,58,0.08); }
+.cap-map-label { font-size: 0.54rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(201,150,58,0.5); margin-bottom: 1rem; }
+.map-track { display: flex; align-items: flex-start; overflow-x: auto; scrollbar-width: none; padding-bottom: 0.25rem; }
+.map-track::-webkit-scrollbar { display: none; }
+.map-stop { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+.map-dot { width: 9px; height: 9px; border-radius: 50%; margin-bottom: 0.4rem; flex-shrink: 0; }
+.md-o { background: var(--brown); }
+.md-m { background: rgba(201,150,58,0.5); border: 1px solid rgba(201,150,58,0.7); }
+.md-n { background: var(--gold); border: 2px solid rgba(247,243,238,0.15); }
+.map-info { text-align: center; max-width: 60px; }
+.map-city { font-size: 0.68rem; font-weight: 500; color: rgba(247,243,238,0.65); line-height: 1.3; }
+.map-yr { font-size: 0.55rem; color: rgba(247,243,238,0.28); margin-top: 0.1rem; }
+.map-line { flex: 1; height: 1px; min-width: 12px; background: repeating-linear-gradient(to right, rgba(201,150,58,0.3) 0, rgba(201,150,58,0.3) 4px, transparent 4px, transparent 8px); margin-bottom: 1.5rem; flex-shrink: 0; }
+
+/* Story detail */
+.cap-detail { padding: 1.4rem 1.5rem; border-bottom: 1px solid rgba(201,150,58,0.08); }
+.cap-detail-label { font-size: 0.54rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(201,150,58,0.5); margin-bottom: 0.5rem; }
+.cap-detail-text { font-size: 0.88rem; color: rgba(247,243,238,0.48); line-height: 1.8; }
+.cap-detail-text strong { color: rgba(247,243,238,0.72); font-weight: 400; }
+
+/* Pull quotes */
+.cap-pq { padding: 1.4rem 1.5rem; border-bottom: 1px solid rgba(201,150,58,0.08); border-left: 2px solid var(--gold); background: rgba(201,150,58,0.04); margin: 0; }
+.cap-pq-text { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-style: italic; color: rgba(247,243,238,0.68); line-height: 1.72; margin-bottom: 0.5rem; }
+.cap-pq-cite { font-size: 0.6rem; color: rgba(247,243,238,0.28); font-style: normal; letter-spacing: 0.06em; }
+
+/* Tags */
+.cap-tags { padding: 1.1rem 1.5rem; display: flex; flex-wrap: wrap; gap: 0.4rem; border-bottom: 1px solid rgba(201,150,58,0.08); }
+.cap-tag { font-size: 0.6rem; padding: 0.22rem 0.65rem; border: 1px solid rgba(201,150,58,0.15); border-radius: 100px; color: rgba(247,243,238,0.3); letter-spacing: 0.04em; }
+
+.cap-foot { padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; background: rgba(201,150,58,0.04); }
+.cap-foot-text { font-family: 'Cormorant Garamond', serif; font-size: 0.78rem; font-style: italic; color: rgba(247,243,238,0.28); }
+.cap-foot-link { font-size: 0.6rem; color: var(--gold); letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; opacity: 0.8; -webkit-tap-highlight-color: transparent; }
+.cap-foot-link:hover { opacity: 1; }
+
+/* ── MOMENTS ── */
+.moments-section { background: var(--warm); padding: 5rem 1.5rem; }
+.s-label { font-size: 0.62rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; text-align: center; }
+.s-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 5vw, 2.8rem); font-weight: 300; line-height: 1.18; text-align: center; margin-bottom: 0.75rem; color: var(--ink); }
+.s-title em { font-style: italic; color: var(--brown); }
+.s-sub { text-align: center; color: var(--muted); font-size: 0.9rem; line-height: 1.75; max-width: 340px; margin: 0 auto 3rem; }
+
+.moments { max-width: 540px; margin: 0 auto; }
+.moment { display: flex; gap: 1.1rem; align-items: flex-start; padding: 1.35rem 0; border-bottom: 1px solid rgba(107,76,53,0.09); }
+.moment:last-child { border-bottom: none; }
+.m-icon { font-size: 1.4rem; flex-shrink: 0; width: 2.2rem; text-align: center; padding-top: 0.1rem; }
+.m-body h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 400; color: var(--ink); margin-bottom: 0.25rem; }
+.m-body p { font-size: 0.85rem; color: var(--muted); line-height: 1.72; margin: 0; }
+
+/* ── TIERS ── */
+.tiers-section { background: var(--cream); padding: 5rem 1.5rem; }
+.tier { background: white; border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin-bottom: 1rem; opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
+.tier.visible { opacity: 1; transform: translateY(0); }
+.tier-hd { padding: 1.6rem 1.25rem; position: relative; overflow: hidden; }
+.tier.t1 .tier-hd { background: var(--warm); border-bottom: 1px solid var(--border); }
+.tier.t2 .tier-hd { background: var(--ink); }
+.tier.t3 .tier-hd { background: linear-gradient(140deg, #231810 0%, #1C1713 100%); border-bottom: 1px solid rgba(201,150,58,0.12); }
+.tier-badge { display: inline-block; font-size: 0.57rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; background: var(--gold); color: var(--ink); padding: 0.18rem 0.6rem; border-radius: 100px; margin-bottom: 0.5rem; }
+.tier-num { position: absolute; top: 0.75rem; right: 1.25rem; font-family: 'Cormorant Garamond', serif; font-size: 3.8rem; font-weight: 300; line-height: 1; color: var(--gold); opacity: 0.11; }
+.tier-name { font-family: 'Cormorant Garamond', serif; font-size: 1.65rem; font-weight: 400; margin-bottom: 0.2rem; }
+.tier.t1 .tier-name { color: var(--ink); }
+.tier.t2 .tier-name { color: var(--cream); }
+.tier.t3 .tier-name { color: var(--gold-l); }
+.tier-promise { font-family: 'Cormorant Garamond', serif; font-size: 0.88rem; font-style: italic; }
+.tier.t1 .tier-promise { color: var(--muted); }
+.tier.t2 .tier-promise { color: rgba(247,243,238,0.4); }
+.tier.t3 .tier-promise { color: rgba(232,201,122,0.42); }
+.tier-body { padding: 1.4rem 1.25rem; }
+.tier-desc { font-size: 0.87rem; color: var(--muted); line-height: 1.75; margin-bottom: 1.1rem; border-left: 2px solid var(--border); padding-left: 0.85rem; }
+.tier-feats { list-style: none; margin-bottom: 1.35rem; }
+.tier-feats li { font-size: 0.84rem; color: var(--text); padding: 0.45rem 0; border-bottom: 1px solid rgba(107,76,53,0.07); display: flex; gap: 0.55rem; align-items: flex-start; line-height: 1.5; }
+.tier-feats li::before { content: '✦'; color: var(--gold); font-size: 0.5rem; margin-top: 0.4rem; flex-shrink: 0; }
+.tier-btn { width: 100%; padding: 0.95rem; border-radius: 2px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; border: none; transition: opacity 0.15s; -webkit-tap-highlight-color: transparent; }
+.tier-btn:hover { opacity: 0.86; }
+.tier.t1 .tier-btn { background: var(--ink); color: var(--cream); }
+.tier.t2 .tier-btn { background: var(--gold); color: var(--ink); }
+.tier.t3 .tier-btn { background: var(--gold); color: var(--ink); }
+.tier-avail { text-align: center; font-size: 0.63rem; color: var(--muted); margin-top: 0.6rem; }
+
+/* ── FINAL CTA ── */
+.final-cta {
+  background: linear-gradient(168deg, #080503 0%, #110905 18%, #221208 38%, #3E2008 60%, #68350E 82%, #965018 96%);
+  padding: 6rem 1.5rem; text-align: center; position: relative; overflow: hidden;
+}
+.final-cta::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 600px; height: 600px; background: radial-gradient(circle, rgba(201,150,58,0.06) 0%, transparent 60%); pointer-events: none; }
+.final-grain { position: absolute; inset: 0; opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-size: 220px; pointer-events: none; }
+.final-inner { position: relative; z-index: 1; max-width: 520px; margin: 0 auto; }
+.final-hl { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 7vw, 4rem); font-weight: 300; color: white; line-height: 1.08; margin-bottom: 0.5rem; }
+.final-hl em { font-style: italic; color: var(--gold-l); }
+.final-hl2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1rem, 2.5vw, 1.35rem); font-weight: 300; font-style: italic; color: rgba(247,243,238,0.45); margin-bottom: 1.75rem; line-height: 1.5; }
+.final-sub { font-size: 0.87rem; color: rgba(247,243,238,0.3); line-height: 1.75; max-width: 320px; margin: 0 auto 2.5rem; }
+.final-form input { width: 100%; padding: 1rem 1.25rem; border: 1px solid rgba(255,255,255,0.1); border-radius: 3px 3px 0 0; background: rgba(255,255,255,0.07); color: white; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; outline: none; -webkit-appearance: none; }
+.final-form input::placeholder { color: rgba(247,243,238,0.25); }
+.final-form button { width: 100%; padding: 1rem; background: var(--gold); color: var(--ink); border: none; border-radius: 0 0 3px 3px; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 500; letter-spacing: 0.04em; cursor: pointer; transition: background 0.2s; }
+.final-form button:hover { background: var(--gold-l); }
+.final-note { font-size: 0.63rem; color: rgba(247,243,238,0.2); margin-top: 0.85rem; line-height: 1.6; }
+.final-note a { color: rgba(247,243,238,0.32); cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
+.final-note a:hover { color: var(--gold-l); }
+.founder-box { max-width: 100%; margin: 1.5rem auto 0; background: rgba(255,255,255,0.04); border: 1px solid rgba(201,150,58,0.1); border-radius: 3px; padding: 1rem 1.25rem; }
+.founder-box p { font-size: 0.72rem; color: rgba(247,243,238,0.33); line-height: 1.65; }
+.founder-box strong { color: var(--gold); }
+.gift-toggle { margin-top: 1.5rem; font-size: 0.75rem; color: rgba(247,243,238,0.28); cursor: pointer; text-decoration: underline; text-underline-offset: 2px; display: inline-block; }
+.gift-toggle:hover { color: var(--gold-l); }
+.gift-form { display: none; margin-top: 1.25rem; }
+.gift-form.open { display: block; }
+.gift-form input { width: 100%; padding: 1rem 1.25rem; border: 1px solid rgba(255,255,255,0.08); border-radius: 3px 3px 0 0; background: rgba(255,255,255,0.06); color: white; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; outline: none; -webkit-appearance: none; }
+.gift-form input::placeholder { color: rgba(247,243,238,0.22); }
+.gift-form button { width: 100%; padding: 1rem; background: var(--brown); color: white; border: none; border-radius: 0 0 3px 3px; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.04em; cursor: pointer; transition: opacity 0.2s; }
+.gift-form button:hover { opacity: 0.88; }
+
+/* FOOTER */
+footer { background: #060402; padding: 1.75rem 1.25rem; text-align: center; border-top: 1px solid rgba(201,150,58,0.06); }
+.footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: rgba(247,243,238,0.2); margin-bottom: 0.3rem; }
+.footer-logo span { color: rgba(201,150,58,0.45); }
+footer p { font-size: 0.58rem; color: rgba(247,243,238,0.11); }
+
+/* ── TABLET 640px+ ── */
+@media (min-width: 640px) {
+  .moments { max-width: 680px; display: grid; grid-template-columns: 1fr 1fr; gap: 0 2.5rem; }
+  .moment { border-bottom: 1px solid rgba(107,76,53,0.09); }
+  .tiers-section { padding: 5rem 2rem; }
+  .tier { margin-bottom: 1rem; }
+  .cap-card { max-width: 520px; }
+}
+
+/* ── DESKTOP 1024px+ ── */
+@media (min-width: 1024px) {
+  nav { padding: 1rem 3.5rem; }
+  .nav-cta { font-size: 0.75rem; padding: 0.55rem 1.25rem; }
+
+  .hero { padding: 8rem 3.5rem 5rem; }
+  .hero-inner { max-width: 620px; }
+  .hero-hl { font-size: clamp(3rem, 5.5vw, 5.5rem); }
+  .hero-hl2 { font-size: clamp(1.1rem, 1.6vw, 1.4rem); }
+  .hero-form input { border-radius: 3px 0 0 3px; border-right: none; width: auto; flex: 1; }
+  .hero-form button { border-radius: 0 3px 3px 0; white-space: nowrap; padding: 1rem 1.5rem; }
+  .hero-form { display: flex; }
+
+  .capsule-section { padding: 0 3.5rem 5rem; }
+  .cap-intro { padding: 4rem 0 3rem; }
+  .cap-card { max-width: 560px; }
+
+  .moments-section { padding: 6rem 3.5rem; }
+  .moments { max-width: 1000px; grid-template-columns: repeat(3, 1fr); gap: 0 3rem; }
+  .moment:nth-last-child(-n+2) { border-bottom: none; }
+
+  .tiers-section { padding: 6rem 3.5rem; }
+  .tiers-wrap { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; align-items: start; max-width: 1000px; margin: 0 auto; }
+  .tier { margin-bottom: 0; }
+  .tier.t2 { transform: translateY(-12px) !important; box-shadow: 0 20px 55px rgba(201,150,58,0.1); }
+  .tier.t2.visible { transform: translateY(-12px) !important; }
+
+  .final-cta { padding: 7rem 3.5rem; }
+  .final-hl { font-size: clamp(2.5rem, 4vw, 4.5rem); }
+}
+
+/* ── WIDE 1280px+ ── */
+@media (min-width: 1280px) {
+  nav { padding: 1rem 5rem; }
+  .hero { padding: 8rem 5rem 5rem; }
+  .hero-inner { max-width: 680px; }
+  .capsule-section { padding: 0 5rem 5rem; }
+  .moments-section { padding: 6rem 5rem; }
+  .tiers-section { padding: 6rem 5rem; }
+  .tiers-wrap { max-width: 1100px; }
+  .final-cta { padding: 7rem 5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Journey<span>Forward</span></div>
+  <button class="nav-cta" id="nav-btn" onclick="document.getElementById('final-cta').scrollIntoView({behavior:'smooth'})">Join Us</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grain"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <h1 class="hero-hl">Your journey is<br>a story <em>worth</em><br>telling.</h1>
+    <p class="hero-hl2">And the people you love deserve to know how you got here — and carry that story forward.</p>
+    <div class="hero-form-wrap" id="hero-form-wrap">
+      <div class="hero-form">
+        <input type="email" id="hero-email" placeholder="Your email address" inputmode="email" autocomplete="email" />
+        <button onclick="handleSignup('hero-email','hero-success')">Become a Founding Family</button>
+      </div>
+      <p class="hero-note">
+        We're building with our first families now. No credit card required. &nbsp;·&nbsp;
+        <a onclick="toggleGift()">Give this to someone you love →</a>
+      </p>
+    </div>
+    <div class="success-msg" id="hero-success">✦ You're in as a founding family. Something beautiful is coming.</div>
+    <div class="hero-see" onclick="document.getElementById('capsule-sec').scrollIntoView({behavior:'smooth'})">
+      <div class="hero-see-inner">See what a capsule carries</div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-tick"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- CAPSULE SECTION -->
+<section id="capsule-sec" class="capsule-section">
+  <div class="cap-intro">
+    <div class="cap-intro-label">✦ The story of how you got to today</div>
+    <h2 class="cap-intro-title">The first capsules are being built with our<br><em>founding families right now</em></h2>
+    <div class="cap-intro-sub">Here is a glimpse of what yours could carry.</div>
+  </div>
+
+  <div class="cap-card">
+    <div class="cap-head">
+      <div class="cap-head-label">✦ JourneyForward Capsule · Example</div>
+      <div class="cap-head-name">The Osei-Mensah Family</div>
+      <div class="cap-head-span">Kumasi, Ghana · 1948 — Present · Four Generations</div>
+    </div>
+
+    <div class="cap-map">
+      <div class="cap-map-label">The journey</div>
+      <div class="map-track">
+        <div class="map-stop"><div class="map-dot md-o"></div><div class="map-info"><div class="map-city">Kumasi</div><div class="map-yr">Born 1948</div></div></div>
+        <div class="map-line"></div>
+        <div class="map-stop"><div class="map-dot md-m"></div><div class="map-info"><div class="map-city">London</div><div class="map-yr">1971</div></div></div>
+        <div class="map-line"></div>
+        <div class="map-stop"><div class="map-dot md-m"></div><div class="map-info"><div class="map-city">London</div><div class="map-yr">1975</div></div></div>
+        <div class="map-line"></div>
+        <div class="map-stop"><div class="map-dot md-m"></div><div class="map-info"><div class="map-city">Toronto</div><div class="map-yr">1979</div></div></div>
+        <div class="map-line"></div>
+        <div class="map-stop"><div class="map-dot md-n"></div><div class="map-info"><div class="map-city">Atlanta</div><div class="map-yr">Today</div></div></div>
+      </div>
+    </div>
+
+    <div class="cap-detail">
+      <div class="cap-detail-label">How he got here</div>
+      <p class="cap-detail-text">In <strong>1971</strong>, Kwame packed one suitcase — three shirts, his certificates, and his mother's groundnut soup recipe, folded four times at a bus station in Kumasi. He had never been on a plane. He arrived in London and watched his breath appear in the cold air for the first time in his life. That recipe is now framed in his kitchen in Atlanta.</p>
+    </div>
+
+    <div class="cap-pq">
+      <p class="cap-pq-text">"My mother used to say: you carry the compound with you wherever you go. She was right. I have never been anywhere that didn't feel like I was trying to rebuild what we had on that street in Kumasi."</p>
+      <div class="cap-pq-cite">— Kwame Osei-Mensah · Recorded age 74 · Atlanta, 2022</div>
+    </div>
+
+    <div class="cap-pq">
+      <p class="cap-pq-text">"When my daughter got into medical school, my father said: 'Your grandmother carried cocoa on her back so you could have a back that only ever carries your own children.' I think about that every single day."</p>
+      <div class="cap-pq-cite">— Ama Osei-Mensah · Physician · Atlanta, 2023</div>
+    </div>
+
+    <div class="cap-tags">
+      <span class="cap-tag">Ghana · UK · Canada · USA</span>
+      <span class="cap-tag">4 generations</span>
+      <span class="cap-tag">The groundnut soup recipe</span>
+      <span class="cap-tag">Kente weaving</span>
+      <span class="cap-tag">First-generation scholars</span>
+    </div>
+
+    <div class="cap-foot">
+      <div class="cap-foot-text">Carried forward by JourneyForward</div>
+      <div class="cap-foot-link" onclick="document.getElementById('final-cta').scrollIntoView({behavior:'smooth'})">Start yours →</div>
+    </div>
+  </div>
+</section>
+
+<!-- MOMENTS -->
+<section class="moments-section">
+  <p class="s-label">When the story becomes urgent</p>
+  <h2 class="s-title">You already feel<br><em>the weight of it</em></h2>
+  <p class="s-sub">There is always a moment when the story of how you got here feels too important to leave untold.</p>
+  <div class="moments">
+    <div class="moment">
+      <div class="m-icon">👶</div>
+      <div class="m-body"><h4>A new life begins</h4><p>Someone arrives and you feel the full weight of everything that led to this moment. You want them to know the whole story.</p></div>
+    </div>
+    <div class="moment">
+      <div class="m-icon">💍</div>
+      <div class="m-body"><h4>Two journeys become one</h4><p>A wedding is where two stories meet. The moment to capture both — before they weave together and the details soften.</p></div>
+    </div>
+    <div class="moment">
+      <div class="m-icon">🎓</div>
+      <div class="m-body"><h4>The payoff of the journey</h4><p>A graduation is never one person's achievement alone. It's built on everything everyone before them carried. That story deserves to travel forward.</p></div>
+    </div>
+    <div class="moment">
+      <div class="m-icon">🌍</div>
+      <div class="m-body"><h4>The people gather</h4><p>At a reunion the whole story is alive in the room. Everyone who holds a piece of it is there. Tell it while they are.</p></div>
+    </div>
+    <div class="moment">
+      <div class="m-icon">✍️</div>
+      <div class="m-body"><h4>You're ready to tell it</h4><p>Sometimes there is no specific event. Just a quiet certainty that your story is worth telling — and the people you love deserve to carry it forward.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TIERS -->
+<section class="tiers-section">
+  <div style="text-align:center; margin-bottom:2.5rem;">
+    <p class="s-label">Choose your experience</p>
+    <h2 class="s-title">Three ways to tell<br><em>the story of how you got here</em></h2>
+    <p class="s-sub" style="margin-bottom:0;">One chapter. The whole journey. Or the full cinematic record.</p>
+  </div>
+  <div class="tiers-wrap">
+
+    <div class="tier t1">
+      <div class="tier-hd">
+        <div class="tier-num">I</div>
+        <div class="tier-name">The Capsule</div>
+        <div class="tier-promise">Your chapter, told and carried forward</div>
+      </div>
+      <div class="tier-body">
+        <p class="tier-desc">Self-guided. Answer prompts, share memories, add the artifacts that prove the story happened. We shape everything into something permanent and beautiful.</p>
+        <ul class="tier-feats">
+          <li>Guided origin story prompts</li>
+          <li>Photos, documents & voice notes</li>
+          <li>Beautiful permanent capsule page</li>
+          <li>Shareable with the people you love</li>
+          <li>Lives online and travels forward forever</li>
+        </ul>
+        <button class="tier-btn" onclick="document.getElementById('final-cta').scrollIntoView({behavior:'smooth'})">Become a Founding Family</button>
+        <p class="tier-avail">✦ Launching first · Founding families only</p>
+      </div>
+    </div>
+
+    <div class="tier t2">
+      <div class="tier-hd">
+        <div class="tier-badge">Most Popular</div>
+        <div class="tier-num">II</div>
+        <div class="tier-name">The Portrait</div>
+        <div class="tier-promise">The full journey, told in depth</div>
+      </div>
+      <div class="tier-body">
+        <p class="tier-desc">Deeper and richer. Guided video responses on your phone, a complete family tree, and a beautifully structured capsule that carries the whole story — not just one chapter.</p>
+        <ul class="tier-feats">
+          <li>On-screen guided video interviews</li>
+          <li>Full interactive family tree</li>
+          <li>AI-assisted story structuring</li>
+          <li>Premium cinematic capsule design</li>
+          <li>Downloadable archive for the people you love</li>
+        </ul>
+        <button class="tier-btn" onclick="document.getElementById('final-cta').scrollIntoView({behavior:'smooth'})">Express Interest</button>
+        <p class="tier-avail">✦ Coming after launch</p>
+      </div>
+    </div>
+
+    <div class="tier t3">
+      <div class="tier-hd">
+        <div class="tier-num">III</div>
+        <div class="tier-name">The Legacy</div>
+        <div class="tier-promise">A cinematic record of the full journey</div>
+      </div>
+      <div class="tier-body">
+        <p class="tier-desc">For those who want something extraordinary. A professional crew comes to you — filming, curating, and crafting a cinematic record of how you got here, for everyone who comes after.</p>
+        <ul class="tier-feats">
+          <li>Professional crew visits you</li>
+          <li>Cinematic interviews & archival research</li>
+          <li>Full documentary-style production</li>
+          <li>Heirloom digital & physical delivery</li>
+          <li>Private screening for the people you love</li>
+        </ul>
+        <button class="tier-btn" onclick="document.getElementById('final-cta').scrollIntoView({behavior:'smooth'})">Register Interest</button>
+        <p class="tier-avail">✦ Limited · By application only</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta" id="final-cta">
+  <div class="final-grain"></div>
+  <div class="final-inner">
+    <h2 class="final-hl">Your journey is<br>a story <em>worth</em><br>telling.</h2>
+    <p class="final-hl2">And the people you love deserve to know how you got here.</p>
+    <p class="final-sub">Become one of our founding families. Your story — told properly, kept permanently, carried forward.</p>
+    <div id="final-form-wrap">
+      <div class="final-form">
+        <input type="email" id="final-email" placeholder="Your email address" inputmode="email" autocomplete="email" />
+        <button onclick="handleSignup('final-email','final-success')">Become a Founding Family</button>
+      </div>
+    </div>
+    <div class="success-msg" id="final-success">✦ You're in as a founding family. Your story will travel forward.</div>
+    <p class="final-note">
+      Your place is reserved. No credit card. No spam. Unsubscribe anytime.<br>
+      <a onclick="toggleGift()">🎁 Give this to someone you love →</a>
+    </p>
+    <div class="founder-box">
+      <p>Founding families shape the product from the start and get first access when we launch. Spots are limited.</p>
+    </div>
+    <div class="gift-form" id="gift-form">
+      <input type="email" id="gift-email" placeholder="Your email — we'll send gift details" inputmode="email" />
+      <button onclick="handleSignup('gift-email','gift-success')">Send Me Gift Details</button>
+    </div>
+    <div class="success-msg" id="gift-success" style="color:var(--gold-l);">✦ We'll send you everything you need.</div>
+    <div class="gift-toggle" onclick="toggleGift()" id="gift-close" style="display:none;">Close ✕</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Journey<span>Forward</span></div>
+  <p>© 2026 JourneyForward &nbsp;·&nbsp; Your journey is a story worth telling.</p>
+</footer>
+
+<script>
+  // Nav button text
+  function updateNavBtn() {
+    const btn = document.getElementById('nav-btn');
+    if (btn) btn.textContent = window.innerWidth >= 1024 ? 'Become a Founding Family' : 'Join Us';
+  }
+  updateNavBtn();
+  window.addEventListener('resize', updateNavBtn);
+
+  // Signup
+  function handleSignup(inputId, successId) {
+    const input = document.getElementById(inputId);
+    const success = document.getElementById(successId);
+    if (!input || !success) return;
+    const email = input.value.trim();
+    if (!email || !email.includes('@')) {
+      input.style.outline = '1px solid rgba(201,150,58,0.6)';
+      input.placeholder = 'Please enter a valid email';
+      setTimeout(() => { input.style.outline = ''; input.placeholder = 'Your email address'; }, 2200);
+      return;
+    }
+    const parent = input.closest('.hero-form, .final-form, .gift-form');
+    if (parent) parent.style.display = 'none';
+    success.style.display = 'block';
+  }
+
+  // Gift toggle
+  function toggleGift() {
+    const g = document.getElementById('gift-form');
+    const c = document.getElementById('gift-close');
+    g.classList.toggle('open');
+    if (c) c.style.display = g.classList.contains('open') ? 'inline-block' : 'none';
+    if (g.classList.contains('open')) setTimeout(() => g.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+  }
+
+  // Tier reveal
+  const tiers = document.querySelectorAll('.tier');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 100);
+    });
+  }, { threshold: 0.1 });
+  tiers.forEach(t => obs.observe(t));
+</script>
+</body>
+</html>
