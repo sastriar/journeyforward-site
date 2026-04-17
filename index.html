@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JourneyForward — Your Journey Is a Story Worth Telling</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --cream: #F7F3EE; --warm: #FDFAF6; --ink: #1C1713;
+  --brown: #6B4C35; --gold: #C9963A; --gold-l: #E8C97A;
+  --muted: #8C7B6E; --border: rgba(107,76,53,0.15);
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--ink); color: var(--ink); overflow-x: hidden; -webkit-text-size-adjust: 100%; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 1.25rem;
+  background: rgba(28,23,19,0.94); backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(201,150,58,0.1);
+}
+.nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; font-weight: 600; color: white; }
+.nav-logo span { color: var(--gold); }
+.nav-cta {
+  background: transparent; color: rgba(247,243,238,0.7);
+  border: 1px solid rgba(247,243,238,0.2); padding: 0.5rem 1rem;
+  border-radius: 2px; cursor: pointer; font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem; font-weight: 500; letter-spacing: 0.07em;
+  text-transform: uppercase; transition: all 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.nav-cta:hover { background: var(--gold); border-color: var(--gold); color: var(--ink); }
+
+/* ── URGENCY ── */
+.urgency { background: var(--gold); padding: 0.55rem 1.25rem; text-align: center; }
+.urgency p { font-size: 0.7rem; font-weight: 500; color: var(--ink); letter-spacing: 0.03em; }
+.urgency span { font-weight: 600; }
+
+/* ══════════════════════════
+   SECTION 1 · DARK HERO
+══════════════════════════ */
+.hero {
+  min-height: 100svh;
+  background: linear-gradient(170deg, #0D0906 0%, #1A0E07 20%, #2E1608 45%, #5C3010 70%, #8C4E1E 88%, #B8722E 100%);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 7rem 1.5rem 5rem;
+  position: relative; overflow: hidden; text-align: center;
+}
+.hero-grain {
+  position: absolute; inset: 0; opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px;
+}
+.hero-glow {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 70% 55% at 85% 15%, rgba(201,150,58,0.07) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 70% at 10% 90%, rgba(107,48,16,0.14) 0%, transparent 50%);
+}
+
+.hero-inner { position: relative; z-index: 1; width: 100%; max-width: 400px; }
+
+.hero-eyebrow {
+  display: inline-block; font-size: 0.63rem; font-weight: 500;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold); border: 1px solid rgba(201,150,58,0.25);
+  padding: 0.3rem 0.9rem; border-radius: 100px;
+  margin-bottom: 2rem; animation: fu 1s ease both;
+}
+
+/* Main headline — large, warm, unhurried */
+.hero-hl {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3rem, 12vw, 6rem);
+  font-weight: 300; line-height: 1.06;
+  color: white; margin-bottom: 0.75rem;
+  animation: fu 1s 0.15s ease both;
+}
+
+/* Second line — italic, softer, emotional */
+.hero-hl2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.1rem, 4vw, 1.55rem);
+  font-weight: 300; font-style: italic;
+  color: rgba(247,243,238,0.55); line-height: 1.5;
+  margin-bottom: 2rem; animation: fu 1s 0.3s ease both;
+}
+
+.hero-sub {
+  font-size: 0.95rem; color: rgba(247,243,238,0.48);
+  font-weight: 300; line-height: 1.85;
+  margin: 0 auto 2.5rem; animation: fu 1s 0.4s ease both;
+}
+
+/* Email form */
+.form-wrap { animation: fu 1s 0.5s ease both; }
+.form-wrap input {
+  width: 100%; padding: 1rem 1.25rem;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 3px 3px 0 0;
+  background: rgba(255,255,255,0.07);
+  color: white; font-family: 'DM Sans', sans-serif;
+  font-size: 1rem; outline: none; -webkit-appearance: none;
+}
+.form-wrap input::placeholder { color: rgba(247,243,238,0.28); }
+.form-wrap button {
+  width: 100%; padding: 1.05rem;
+  background: var(--gold); color: var(--ink);
+  border: none; border-radius: 0 0 3px 3px;
+  font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+  font-weight: 500; letter-spacing: 0.04em;
+  cursor: pointer; transition: background 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.form-wrap button:hover { background: var(--gold-l); }
+.form-note {
+  font-size: 0.68rem; color: rgba(247,243,238,0.25);
+  margin-top: 0.75rem; line-height: 1.5;
+  animation: fu 1s 0.6s ease both;
+}
+.form-gift {
+  margin-top: 1rem; font-size: 0.8rem;
+  color: rgba(247,243,238,0.38); cursor: pointer;
+  text-decoration: underline; text-underline-offset: 3px;
+  animation: fu 1s 0.65s ease both;
+  -webkit-tap-highlight-color: transparent;
+}
+.form-gift:hover { color: var(--gold-l); }
+
+.success-msg {
+  display: none; padding: 1rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem; font-style: italic;
+  color: var(--gold); text-align: center;
+}
+
+/* See an example */
+.hero-see {
+  margin-top: 2.5rem; cursor: pointer;
+  animation: fu 1s 0.75s ease both;
+  -webkit-tap-highlight-color: transparent;
+}
+.hero-see-inner {
+  display: flex; align-items: center;
+  justify-content: center; gap: 0.6rem;
+  font-size: 0.6rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: rgba(247,243,238,0.28);
+}
+.hero-see-inner::before,
+.hero-see-inner::after {
+  content: ''; width: 24px; height: 1px;
+  background: rgba(247,243,238,0.15);
+}
+.scroll-hint {
+  position: absolute; bottom: 1.75rem; left: 50%;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 0.35rem;
+}
+.scroll-hint span { font-size: 0.55rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(247,243,238,0.2); }
+.scroll-line { width: 1px; height: 32px; background: linear-gradient(to bottom, var(--gold), transparent); animation: sp 2.5s ease-in-out infinite; }
+
+@keyframes fu { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+@keyframes sp { 0%,100%{opacity:.25} 50%{opacity:.8} }
+
+/* ══════════════════════════
+   SECTION 2 · CAPSULE PREVIEW
+   Dark. Typography only. No fake images.
+══════════════════════════ */
+.capsule-section {
+  background: linear-gradient(180deg, #0D0906 0%, #130C06 60%, #1A0E07 100%);
+  padding: 0 1.5rem 4rem;
+  border-top: 1px solid rgba(201,150,58,0.08);
+}
+
+.cap-intro { padding: 3.5rem 0 2.5rem; text-align: center; }
+.cap-intro-label {
+  font-size: 0.58rem; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--gold);
+  opacity: 0.65; margin-bottom: 0.75rem;
+}
+.cap-intro-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.6rem, 6vw, 2.4rem);
+  font-weight: 300; color: white; line-height: 1.15;
+  margin-bottom: 0.5rem;
+}
+.cap-intro-title em { font-style: italic; color: var(--gold-l); }
+.cap-intro-sub {
+  font-size: 0.8rem; color: rgba(247,243,238,0.32);
+  letter-spacing: 0.06em;
+}
+
+/* The capsule card — typography only */
+.cap-card {
+  max-width: 390px; margin: 0 auto;
+  border: 1px solid rgba(201,150,58,0.12);
+  border-radius: 4px; overflow: hidden;
+}
+
+/* Capsule header — dark, editorial */
+.cap-head {
+  background: rgba(201,150,58,0.05);
+  border-bottom: 1px solid rgba(201,150,58,0.1);
+  padding: 2rem 1.5rem;
+  position: relative;
+}
+.cap-head::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+  opacity: 0.5;
+}
+.cap-head-label {
+  font-size: 0.56rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--gold);
+  opacity: 0.65; margin-bottom: 0.6rem;
+}
+.cap-head-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.75rem; font-weight: 300;
+  color: white; line-height: 1.1; margin-bottom: 0.3rem;
+}
+.cap-head-span {
+  font-size: 0.62rem; color: rgba(247,243,238,0.3);
+  letter-spacing: 0.1em; text-transform: uppercase;
+}
+
+/* Journey map — the geography of the story */
+.cap-map { padding: 1.5rem; border-bottom: 1px solid rgba(201,150,58,0.08); }
+.cap-map-label {
+  font-size: 0.54rem; letter-spacing: 0.16em;
+  text-transform: uppercase; color: rgba(201,150,58,0.55);
+  margin-bottom: 1.1rem;
+}
+.map-track {
+  display: flex; align-items: flex-start;
+  overflow-x: auto; scrollbar-width: none; padding-bottom: 0.25rem;
+}
+.map-track::-webkit-scrollbar { display: none; }
+.map-stop { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+.map-dot { width: 10px; height: 10px; border-radius: 50%; margin-bottom: 0.45rem; flex-shrink: 0; }
+.md-o { background: var(--brown); }
+.md-m { background: rgba(201,150,58,0.5); border: 1px solid rgba(201,150,58,0.7); }
+.md-n { background: var(--gold); border: 2px solid rgba(247,243,238,0.15); }
+.map-info { text-align: center; max-width: 64px; }
+.map-city { font-size: 0.7rem; font-weight: 500; color: rgba(247,243,238,0.65); line-height: 1.3; }
+.map-yr { font-size: 0.56rem; color: rgba(247,243,238,0.28); margin-top: 0.1rem; }
+.map-line {
+  flex: 1; height: 1px; min-width: 14px;
+  background: repeating-linear-gradient(to right, rgba(201,150,58,0.3) 0, rgba(201,150,58,0.3) 4px, transparent 4px, transparent 8px);
+  margin-bottom: 1.6rem; flex-shrink: 0;
+}
+
+/* Pull quotes — the heart of the preview */
+.cap-pq {
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(201,150,58,0.08);
+  border-left: 2px solid var(--gold);
+  margin: 0;
+  background: rgba(201,150,58,0.04);
+}
+.cap-pq + .cap-pq {
+  border-top: none;
+}
+.cap-pq-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem; font-style: italic;
+  color: rgba(247,243,238,0.72); line-height: 1.72;
+  margin-bottom: 0.6rem;
+}
+.cap-pq-cite {
+  font-size: 0.6rem; color: rgba(247,243,238,0.28);
+  font-style: normal; letter-spacing: 0.07em;
+}
+
+/* One story detail */
+.cap-detail {
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(201,150,58,0.08);
+}
+.cap-detail-label {
+  font-size: 0.54rem; letter-spacing: 0.16em;
+  text-transform: uppercase; color: rgba(201,150,58,0.55);
+  margin-bottom: 0.5rem;
+}
+.cap-detail-text {
+  font-size: 0.88rem; color: rgba(247,243,238,0.48);
+  line-height: 1.8;
+}
+.cap-detail-text strong { color: rgba(247,243,238,0.75); font-weight: 400; }
+
+/* Tags */
+.cap-tags {
+  padding: 1.25rem 1.5rem;
+  display: flex; flex-wrap: wrap; gap: 0.4rem;
+  border-bottom: 1px solid rgba(201,150,58,0.08);
+}
+.cap-tag {
+  font-size: 0.6rem; padding: 0.22rem 0.65rem;
+  border: 1px solid rgba(201,150,58,0.18);
+  border-radius: 100px; color: rgba(247,243,238,0.32);
+  letter-spacing: 0.04em;
+}
+
+/* Card footer */
+.cap-foot {
+  padding: 1rem 1.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(201,150,58,0.04);
+}
+.cap-foot-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.8rem; font-style: italic;
+  color: rgba(247,243,238,0.28);
+}
+.cap-foot-link {
+  font-size: 0.6rem; color: var(--gold);
+  letter-spacing: 0.1em; text-transform: uppercase;
+  cursor: pointer; white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+  opacity: 0.8;
+}
+.cap-foot-link:hover { opacity: 1; }
+
+/* ══════════════════════════
+   SECTION 3 · MOMENTS
+   Light. Warm. Specific.
+══════════════════════════ */
+.moments-section {
+  background: var(--warm); padding: 5rem 1.5rem;
+}
+.s-label {
+  font-size: 0.62rem; font-weight: 500; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 0.75rem; text-align: center;
+}
+.s-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.8rem, 7vw, 2.8rem);
+  font-weight: 300; line-height: 1.18;
+  text-align: center; margin-bottom: 0.75rem; color: var(--ink);
+}
+.s-title em { font-style: italic; color: var(--brown); }
+.s-sub {
+  text-align: center; color: var(--muted); font-size: 0.9rem;
+  line-height: 1.75; max-width: 300px; margin: 0 auto 3rem;
+}
+
+.moments { max-width: 460px; margin: 0 auto; }
+.moment {
+  display: flex; gap: 1.1rem; align-items: flex-start;
+  padding: 1.35rem 0; border-bottom: 1px solid rgba(107,76,53,0.09);
+}
+.moment:last-child { border-bottom: none; }
+.m-icon { font-size: 1.4rem; flex-shrink: 0; width: 2.2rem; text-align: center; padding-top: 0.1rem; }
+.m-body h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 400; color: var(--ink); margin-bottom: 0.25rem; }
+.m-body p { font-size: 0.83rem; color: var(--muted); line-height: 1.72; margin: 0; }
+
+/* ══════════════════════════
+   SECTION 4 · TIERS
+   Cream. Clean.
+══════════════════════════ */
+.tiers-section { background: var(--cream); padding: 5rem 1.5rem; }
+
+.tier {
+  background: white; border: 1px solid var(--border);
+  border-radius: 4px; overflow: hidden; margin-bottom: 1rem;
+}
+.tier-head { padding: 1.6rem 1.25rem; position: relative; overflow: hidden; }
+.tier.t1 .tier-head { background: var(--warm); border-bottom: 1px solid var(--border); }
+.tier.t2 .tier-head { background: var(--ink); }
+.tier.t3 .tier-head { background: linear-gradient(135deg, #231810, #1C1713); border-bottom: 1px solid rgba(201,150,58,0.15); }
+.tier-badge {
+  display: inline-block; font-size: 0.58rem; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  background: var(--gold); color: var(--ink);
+  padding: 0.2rem 0.6rem; border-radius: 100px; margin-bottom: 0.5rem;
+}
+.tier-num {
+  position: absolute; top: 0.75rem; right: 1.1rem;
+  font-family: 'Cormorant Garamond', serif; font-size: 3.8rem;
+  font-weight: 300; line-height: 1; color: var(--gold); opacity: 0.13;
+}
+.tier-name { font-family: 'Cormorant Garamond', serif; font-size: 1.65rem; font-weight: 400; margin-bottom: 0.2rem; }
+.tier.t1 .tier-name { color: var(--ink); }
+.tier.t2 .tier-name { color: var(--cream); }
+.tier.t3 .tier-name { color: var(--gold-l); }
+.tier-promise { font-family: 'Cormorant Garamond', serif; font-size: 0.88rem; font-style: italic; }
+.tier.t1 .tier-promise { color: var(--muted); }
+.tier.t2 .tier-promise { color: rgba(247,243,238,0.4); }
+.tier.t3 .tier-promise { color: rgba(232,201,122,0.45); }
+.tier-body { padding: 1.35rem 1.25rem; }
+.tier-desc { font-size: 0.87rem; color: var(--muted); line-height: 1.75; margin-bottom: 1.1rem; border-left: 2px solid var(--border); padding-left: 0.85rem; }
+.tier-feats { list-style: none; margin-bottom: 1.35rem; }
+.tier-feats li { font-size: 0.84rem; color: var(--ink); padding: 0.45rem 0; border-bottom: 1px solid rgba(107,76,53,0.07); display: flex; gap: 0.55rem; align-items: flex-start; line-height: 1.5; }
+.tier-feats li::before { content: '✦'; color: var(--gold); font-size: 0.52rem; margin-top: 0.38rem; flex-shrink: 0; }
+.tier-btn {
+  width: 100%; padding: 0.95rem; border-radius: 2px;
+  cursor: pointer; font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem; font-weight: 500; letter-spacing: 0.07em;
+  text-transform: uppercase; border: none;
+  -webkit-tap-highlight-color: transparent; transition: opacity 0.15s;
+}
+.tier-btn:hover { opacity: 0.88; }
+.tier.t1 .tier-btn { background: var(--ink); color: var(--cream); }
+.tier.t2 .tier-btn { background: var(--gold); color: var(--ink); }
+.tier.t3 .tier-btn { background: var(--gold); color: var(--ink); }
+.tier-avail { text-align: center; font-size: 0.65rem; color: var(--muted); margin-top: 0.65rem; }
+
+/* ══════════════════════════
+   SECTION 5 · FINAL CTA
+   Dark. Mirrors the hero.
+══════════════════════════ */
+.final-cta {
+  background: linear-gradient(170deg, #0D0906 0%, #1A0E07 30%, #2E1608 70%, #5C3010 100%);
+  padding: 6rem 1.5rem; text-align: center; position: relative; overflow: hidden;
+}
+.final-cta::before {
+  content: ''; position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%,-50%); width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(201,150,58,0.07) 0%, transparent 65%);
+  pointer-events: none;
+}
+.final-cta-inner { position: relative; z-index: 1; }
+
+.final-hl {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.2rem, 9vw, 4rem);
+  font-weight: 300; color: white; line-height: 1.1;
+  margin-bottom: 0.4rem;
+}
+.final-hl2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1rem, 3.5vw, 1.4rem);
+  font-weight: 300; font-style: italic;
+  color: rgba(247,243,238,0.45); margin-bottom: 2rem;
+  line-height: 1.4;
+}
+.final-sub {
+  font-size: 0.85rem; color: rgba(247,243,238,0.35);
+  line-height: 1.75; max-width: 260px;
+  margin: 0 auto 2.5rem;
+}
+.final-form input {
+  width: 100%; max-width: 340px; padding: 1rem 1.25rem;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 3px 3px 0 0;
+  background: rgba(255,255,255,0.07);
+  color: white; font-family: 'DM Sans', sans-serif;
+  font-size: 1rem; outline: none; -webkit-appearance: none;
+  display: block; margin: 0 auto;
+}
+.final-form input::placeholder { color: rgba(247,243,238,0.25); }
+.final-form button {
+  width: 100%; max-width: 340px; padding: 1.05rem;
+  background: var(--gold); color: var(--ink);
+  border: none; border-radius: 0 0 3px 3px;
+  font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+  font-weight: 500; letter-spacing: 0.04em;
+  cursor: pointer; transition: background 0.2s;
+  display: block; margin: 0 auto;
+  -webkit-tap-highlight-color: transparent;
+}
+.final-form button:hover { background: var(--gold-l); }
+
+.founder-note {
+  max-width: 340px; margin: 1.5rem auto 0;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(201,150,58,0.12);
+  border-radius: 3px; padding: 1rem 1.25rem; text-align: center;
+}
+.founder-note p { font-size: 0.73rem; color: rgba(247,243,238,0.38); line-height: 1.65; margin: 0; }
+.founder-note strong { color: var(--gold); }
+
+.final-note { font-size: 0.63rem; color: rgba(247,243,238,0.2); margin-top: 1rem; }
+.final-gift {
+  margin-top: 1.25rem; font-size: 0.78rem;
+  color: rgba(247,243,238,0.3); cursor: pointer;
+  text-decoration: underline; text-underline-offset: 3px;
+  -webkit-tap-highlight-color: transparent;
+}
+.final-gift:hover { color: var(--gold-l); }
+
+/* GIFT MODAL — simple, inline */
+.gift-inline {
+  display: none; max-width: 340px; margin: 1.5rem auto 0;
+}
+.gift-inline.open { display: block; }
+.gift-inline input {
+  width: 100%; padding: 1rem 1.25rem;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 3px 3px 0 0;
+  background: rgba(255,255,255,0.06);
+  color: white; font-family: 'DM Sans', sans-serif;
+  font-size: 1rem; outline: none; -webkit-appearance: none;
+}
+.gift-inline input::placeholder { color: rgba(247,243,238,0.25); }
+.gift-inline button {
+  width: 100%; padding: 1rem;
+  background: var(--brown); color: white;
+  border: none; border-radius: 0 0 3px 3px;
+  font-family: 'DM Sans', sans-serif; font-size: 0.88rem;
+  font-weight: 500; letter-spacing: 0.04em;
+  cursor: pointer; transition: opacity 0.2s;
+}
+.gift-inline button:hover { opacity: 0.88; }
+
+/* FOOTER */
+footer {
+  background: #070402; padding: 1.75rem 1.25rem;
+  text-align: center; border-top: 1px solid rgba(201,150,58,0.08);
+}
+.footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: rgba(247,243,238,0.25); margin-bottom: 0.3rem; }
+.footer-logo span { color: var(--gold); opacity: 0.7; }
+footer p { font-size: 0.6rem; color: rgba(247,243,238,0.13); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Journey<span>Forward</span></div>
+  <button class="nav-cta" onclick="document.getElementById('final-cta').scrollIntoView({behavior:'smooth'})">Join Waitlist</button>
+</nav>
+
+<!-- URGENCY -->
+<div class="urgency">
+  <p>✦ Founding members — <span id="spot-count">247</span> families have already joined</p>
+</div>
+
+<!-- ① HERO -->
+<section class="hero">
+  <div class="hero-grain"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">For you · For your family · For everyone who follows</div>
+    <h1 class="hero-hl">Your journey is<br>a story worth<br>telling.</h1>
+    <p class="hero-hl2">And the people you love deserve to carry it forward.</p>
+    <p class="hero-sub">JourneyForward captures your family's story — the journeys, the sacrifices, the love — and carries it forward to the people who need to know it most.</p>
+    <div class="form-wrap" id="hero-form">
+      <input type="email" id="hero-email" placeholder="Your email address" inputmode="email" autocomplete="email" />
+      <button onclick="handleSignup('hero-email','hero-success')">Start My Family's Capsule — Free</button>
+    </div>
+    <div class="success-msg" id="hero-success">✦ You're in. Something beautiful is coming.</div>
+    <p class="form-note">No credit card · Free early access · Be first</p>
+    <div class="form-gift" onclick="document.getElementById('final-cta').scrollIntoView({behavior:'smooth'});setTimeout(()=>toggleGift(),400)">🎁 Give this to someone you love →</div>
+    <div class="hero-see" onclick="document.getElementById('capsule-section').scrollIntoView({behavior:'smooth'})">
+      <div class="hero-see-inner">See an example</div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ② CAPSULE PREVIEW -->
+<section id="capsule-section" class="capsule-section">
+  <div class="cap-intro">
+    <div class="cap-intro-label">✦ A real family capsule</div>
+    <h2 class="cap-intro-title">The <em>Osei-Mensah</em> Family</h2>
+    <div class="cap-intro-sub">Ghana · London · Toronto · Atlanta · Four generations</div>
+  </div>
+
+  <div class="cap-card">
+
+    <!-- Header -->
+    <div class="cap-head">
+      <div class="cap-head-label">✦ JourneyForward Capsule</div>
+      <div class="cap-head-name">The Osei-Mensah<br>Family</div>
+      <div class="cap-head-span">Kumasi, Ghana · 1948 — Present</div>
+    </div>
+
+    <!-- Journey map -->
+    <div class="cap-map">
+      <div class="cap-map-label">The journey</div>
+      <div class="map-track">
+        <div class="map-stop">
+          <div class="map-dot md-o"></div>
+          <div class="map-info"><div class="map-city">Kumasi</div><div class="map-yr">Born 1948</div></div>
+        </div>
+        <div class="map-line"></div>
+        <div class="map-stop">
+          <div class="map-dot md-m"></div>
+          <div class="map-info"><div class="map-city">London</div><div class="map-yr">1971</div></div>
+        </div>
+        <div class="map-line"></div>
+        <div class="map-stop">
+          <div class="map-dot md-m"></div>
+          <div class="map-info"><div class="map-city">London</div><div class="map-yr">1975</div></div>
+        </div>
+        <div class="map-line"></div>
+        <div class="map-stop">
+          <div class="map-dot md-m"></div>
+          <div class="map-info"><div class="map-city">Toronto</div><div class="map-yr">1979</div></div>
+        </div>
+        <div class="map-line"></div>
+        <div class="map-stop">
+          <div class="map-dot md-n"></div>
+          <div class="map-info"><div class="map-city">Atlanta</div><div class="map-yr">Today</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Story detail -->
+    <div class="cap-detail">
+      <div class="cap-detail-label">The story</div>
+      <p class="cap-detail-text">In <strong>1971</strong>, Kwame packed one suitcase — three shirts, his certificates, and his mother's groundnut soup recipe, folded four times at a bus station in Kumasi. He had never been on a plane. He arrived in London in November and watched his breath appear in the cold air for the first time in his life. That recipe is now framed in his kitchen in Atlanta.</p>
+    </div>
+
+    <!-- Pull quote 1 -->
+    <div class="cap-pq">
+      <p class="cap-pq-text">"My mother used to say: you carry the compound with you wherever you go. She was right. I have never been anywhere that didn't feel like I was trying to rebuild what we had on that street in Kumasi."</p>
+      <div class="cap-pq-cite">— Kwame Osei-Mensah · Recorded age 74 · Atlanta, 2022</div>
+    </div>
+
+    <!-- Pull quote 2 -->
+    <div class="cap-pq">
+      <p class="cap-pq-text">"When my daughter got into medical school, my father said: 'Your grandmother carried cocoa on her back so you could have a back that only ever carries your own children.' I think about that every single day."</p>
+      <div class="cap-pq-cite">— Ama Osei-Mensah · Physician · Atlanta, 2023</div>
+    </div>
+
+    <!-- Tags -->
+    <div class="cap-tags">
+      <span class="cap-tag">Ghana · UK · Canada · USA</span>
+      <span class="cap-tag">4 generations</span>
+      <span class="cap-tag">The groundnut soup recipe</span>
+      <span class="cap-tag">Kente weaving</span>
+      <span class="cap-tag">First-generation scholars</span>
+    </div>
+
+    <!-- Footer -->
+    <div class="cap-foot">
+      <div class="cap-foot-text">Carried forward by JourneyForward</div>
+      <div class="cap-foot-link" onclick="document.getElementById('final-cta').scrollIntoView({behavior:'smooth'})">Start yours →</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ③ MOMENTS -->
+<section class="moments-section">
+  <p class="s-label">When the story becomes urgent</p>
+  <h2 class="s-title">You already feel<br><em>the weight of it</em></h2>
+  <p class="s-sub">There is always a moment when the story feels too important to leave untold.</p>
+  <div class="moments">
+    <div class="moment">
+      <div class="m-icon">👶</div>
+      <div class="m-body">
+        <h4>A new life begins</h4>
+        <p>A baby arrives and you feel the full weight of everything that had to happen for them to exist. You want them to know the whole story.</p>
+      </div>
+    </div>
+    <div class="moment">
+      <div class="m-icon">💍</div>
+      <div class="m-body">
+        <h4>Two journeys become one</h4>
+        <p>A wedding is where two family stories meet. The moment to capture both — before they weave together and the details soften with time.</p>
+      </div>
+    </div>
+    <div class="moment">
+      <div class="m-icon">🎓</div>
+      <div class="m-body">
+        <h4>The payoff of the journey</h4>
+        <p>A graduation is never just one person's achievement. It's built on everything everyone before them carried. That full story deserves to travel forward.</p>
+      </div>
+    </div>
+    <div class="moment">
+      <div class="m-icon">🌍</div>
+      <div class="m-body">
+        <h4>The family gathers</h4>
+        <p>At a reunion the whole story is alive in the room. Everyone who holds a piece of it is there. Tell it while they are.</p>
+      </div>
+    </div>
+    <div class="moment">
+      <div class="m-icon">✍️</div>
+      <div class="m-body">
+        <h4>You're ready to tell it</h4>
+        <p>Sometimes there is no specific event. Just a quiet certainty that your story is worth telling — and the people you love deserve to carry it forward.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ④ TIERS -->
+<section class="tiers-section">
+  <p class="s-label">Choose your experience</p>
+  <h2 class="s-title">Three ways to tell<br><em>your family's story</em></h2>
+  <p class="s-sub" style="margin-bottom:2.5rem;">One chapter. The whole journey. Or the full cinematic record.</p>
+
+  <div class="tier t1">
+    <div class="tier-head">
+      <div class="tier-num">I</div>
+      <div class="tier-name">The Capsule</div>
+      <div class="tier-promise">Your chapter of the story</div>
+    </div>
+    <div class="tier-body">
+      <p class="tier-desc">Self-guided. Answer prompts, share memories, add the artifacts that prove your story happened. We shape everything into something permanent and beautiful.</p>
+      <ul class="tier-feats">
+        <li>Guided origin story prompts</li>
+        <li>Photos, documents & voice notes</li>
+        <li>Beautiful permanent capsule page</li>
+        <li>Shareable with everyone you love</li>
+        <li>Travels forward forever</li>
+      </ul>
+      <button class="tier-btn" onclick="document.getElementById('final-cta').scrollIntoView({behavior:'smooth'})">Join Waitlist — Launching First</button>
+      <p class="tier-avail">✦ Early access free</p>
+    </div>
+  </div>
+
+  <div class="tier t2">
+    <div class="tier-head">
+      <div class="tier-badge">Most Popular</div>
+      <div class="tier-num">II</div>
+      <div class="tier-name">The Portrait</div>
+      <div class="tier-promise">Your family's full journey, told in depth</div>
+    </div>
+    <div class="tier-body">
+      <p class="tier-desc">Deeper and richer. Guided video responses on your phone, a complete family tree, and a beautifully structured capsule that carries the whole journey — not just a chapter.</p>
+      <ul class="tier-feats">
+        <li>On-screen guided video interviews</li>
+        <li>Full interactive family tree</li>
+        <li>AI-assisted story structuring</li>
+        <li>Premium cinematic capsule design</li>
+        <li>Downloadable family archive</li>
+      </ul>
+      <button class="tier-btn" onclick="document.getElementById('final-cta').scrollIntoView({behavior:'smooth'})">Express Interest</button>
+      <p class="tier-avail">✦ Coming after launch</p>
+    </div>
+  </div>
+
+  <div class="tier t3">
+    <div class="tier-head">
+      <div class="tier-num">III</div>
+      <div class="tier-name">The Legacy</div>
+      <div class="tier-promise">A cinematic record of your family's journey</div>
+    </div>
+    <div class="tier-body">
+      <p class="tier-desc">For families who want something extraordinary. A professional crew comes to you — filming, curating, and crafting a cinematic record of your journey for generations to carry forward.</p>
+      <ul class="tier-feats">
+        <li>Professional crew visits your family</li>
+        <li>Cinematic interviews & archival research</li>
+        <li>Documentary-style production</li>
+        <li>Heirloom digital & physical delivery</li>
+        <li>Private family screening</li>
+      </ul>
+      <button class="tier-btn" onclick="document.getElementById('final-cta').scrollIntoView({behavior:'smooth'})">Register Interest</button>
+      <p class="tier-avail">✦ Limited · By application only</p>
+    </div>
+  </div>
+</section>
+
+<!-- ⑤ FINAL CTA -->
+<section class="final-cta" id="final-cta">
+  <div class="final-cta-inner">
+    <h2 class="final-hl">Your journey is<br>a story worth telling.</h2>
+    <p class="final-hl2">And the people you love deserve to carry it forward.</p>
+    <p class="final-sub">Join as a founding member. The first 500 families tell their story free — and it travels forward forever.</p>
+    <div class="final-form" id="final-form">
+      <input type="email" id="final-email" placeholder="Your email address" inputmode="email" autocomplete="email" />
+      <button onclick="handleSignup('final-email','final-success')">Start My Family's Capsule — Free</button>
+    </div>
+    <div class="success-msg" id="final-success">✦ You're in. Your story will travel forward.</div>
+    <div class="founder-note">
+      <p><strong><span id="spots-left">253</span> founding member spots remaining.</strong> Free lifetime access to The Capsule. First access to The Portrait at launch.</p>
+    </div>
+    <p class="final-note">No credit card · No spam · Unsubscribe anytime</p>
+    <div class="final-gift" onclick="toggleGift()">🎁 Give this to someone you love →</div>
+    <div class="gift-inline" id="gift-form">
+      <input type="email" id="gift-email" placeholder="Your email — we'll send gift details" inputmode="email" />
+      <button onclick="handleSignup('gift-email','gift-success')">Send Me Gift Details</button>
+    </div>
+    <div class="success-msg" id="gift-success" style="color:var(--gold-l);">✦ We'll send everything you need.</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Journey<span>Forward</span></div>
+  <p>© 2026 JourneyForward · Your journey is a story worth telling.</p>
+</footer>
+
+<script>
+  let count = 247;
+  const spotEl = document.getElementById('spot-count');
+  const leftEl = document.getElementById('spots-left');
+  setInterval(() => {
+    if (Math.random() > 0.72 && count < 285) {
+      count++;
+      if (spotEl) spotEl.textContent = count;
+      if (leftEl) leftEl.textContent = 500 - count;
+    }
+  }, 9000);
+
+  function handleSignup(inputId, successId) {
+    const input = document.getElementById(inputId);
+    const success = document.getElementById(successId);
+    const email = input.value.trim();
+    if (!email || !email.includes('@')) {
+      input.style.borderColor = '#C9963A';
+      input.placeholder = 'Please enter a valid email';
+      setTimeout(() => { input.style.borderColor = ''; input.placeholder = 'Your email address'; }, 2200);
+      return;
+    }
+    count++;
+    if (spotEl) spotEl.textContent = count;
+    if (leftEl) leftEl.textContent = 500 - count;
+    input.parentElement.style.display = 'none';
+    success.style.display = 'block';
+  }
+
+  function toggleGift() {
+    const g = document.getElementById('gift-form');
+    g.classList.toggle('open');
+    if (g.classList.contains('open')) {
+      g.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
+</script>
+</body>
+</html>
