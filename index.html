@@ -323,14 +323,14 @@ footer p { font-size: 0.58rem; color: rgba(247,243,238,0.11); }
     <div class="hero-form-wrap" id="hero-form-wrap">
       <div class="hero-form">
         <input type="email" id="hero-email" placeholder="Your email address" inputmode="email" autocomplete="email" />
-        <button onclick="handleSignup('hero-email','hero-success')">Become a Founding Family</button>
+        <button onclick="handleSignup('hero-email','hero-success')">Join the Founding Journey</button>
       </div>
       <p class="hero-note">
         We're building with our first families now. No credit card required. &nbsp;·&nbsp;
         <a onclick="toggleGift()">Give this to someone you love →</a>
       </p>
     </div>
-    <div class="success-msg" id="hero-success">✦ You're in as a founding family. Something beautiful is coming.</div>
+    <div class="success-msg" id="hero-success">✦ You're in. The founding journey has begun.</div>
     <div class="hero-see" onclick="document.getElementById('capsule-sec').scrollIntoView({behavior:'smooth'})">
       <div class="hero-see-inner">See what a capsule carries</div>
     </div>
@@ -345,7 +345,7 @@ footer p { font-size: 0.58rem; color: rgba(247,243,238,0.11); }
 <section id="capsule-sec" class="capsule-section">
   <div class="cap-intro">
     <div class="cap-intro-label">✦ The story of how you got to today</div>
-    <h2 class="cap-intro-title">The first capsules are being built with our<br><em>founding families right now</em></h2>
+    <h2 class="cap-intro-title">The first capsules are being built on the<br><em>founding journey right now</em></h2>
     <div class="cap-intro-sub">Here is a glimpse of what yours could carry.</div>
   </div>
 
@@ -454,8 +454,8 @@ footer p { font-size: 0.58rem; color: rgba(247,243,238,0.11); }
           <li>Shareable with the people you love</li>
           <li>Lives online and travels forward forever</li>
         </ul>
-        <button class="tier-btn" onclick="document.getElementById('final-cta').scrollIntoView({behavior:'smooth'})">Become a Founding Family</button>
-        <p class="tier-avail">✦ Launching first · Founding families only</p>
+        <button class="tier-btn" onclick="document.getElementById('final-cta').scrollIntoView({behavior:'smooth'})">Join the Founding Journey</button>
+        <p class="tier-avail">✦ Launching first · Founding journey only</p>
       </div>
     </div>
 
@@ -509,20 +509,20 @@ footer p { font-size: 0.58rem; color: rgba(247,243,238,0.11); }
   <div class="final-inner">
     <h2 class="final-hl">Your journey is<br>a story <em>worth</em><br>telling.</h2>
     <p class="final-hl2">And the people you love deserve to know how you got here.</p>
-    <p class="final-sub">Become one of our founding families. Your story — told properly, kept permanently, carried forward.</p>
+    <p class="final-sub">Be part of the founding journey. Your story — told properly, kept permanently, carried forward.</p>
     <div id="final-form-wrap">
       <div class="final-form">
         <input type="email" id="final-email" placeholder="Your email address" inputmode="email" autocomplete="email" />
-        <button onclick="handleSignup('final-email','final-success')">Become a Founding Family</button>
+        <button onclick="handleSignup('final-email','final-success')">Join the Founding Journey</button>
       </div>
     </div>
-    <div class="success-msg" id="final-success">✦ You're in as a founding family. Your story will travel forward.</div>
+    <div class="success-msg" id="final-success">✦ You're in. Your story is part of the founding journey.</div>
     <p class="final-note">
       Your place is reserved. No credit card. No spam. Unsubscribe anytime.<br>
       <a onclick="toggleGift()">🎁 Give this to someone you love →</a>
     </p>
     <div class="founder-box">
-      <p>Founding families shape the product from the start and get first access when we launch. Spots are limited.</p>
+      <p>The founding journey shapes the product from the start. Spots are limited.</p>
     </div>
     <div class="gift-form" id="gift-form">
       <input type="email" id="gift-email" placeholder="Your email — we'll send gift details" inputmode="email" />
@@ -536,19 +536,22 @@ footer p { font-size: 0.58rem; color: rgba(247,243,238,0.11); }
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">Journey<span>Forward</span></div>
-  <p>© 2026 JourneyForward &nbsp;·&nbsp; Your journey is a story worth telling.</p>
+  <p><a href="mailto:hello@myjourneyfwd.com" style="color: rgba(247,243,238,0.28); text-decoration: none; border-bottom: 1px solid rgba(201,150,58,0.15); padding-bottom: 1px;">hello@myjourneyfwd.com</a></p>
+  <p style="margin-top: 0.5rem;">© 2026 JourneyForward &nbsp;·&nbsp; Your journey is a story worth telling.</p>
 </footer>
 
 <script>
   // Nav button text
   function updateNavBtn() {
     const btn = document.getElementById('nav-btn');
-    if (btn) btn.textContent = window.innerWidth >= 1024 ? 'Become a Founding Family' : 'Join Us';
+    if (btn) btn.textContent = window.innerWidth >= 1024 ? 'Join the Founding Journey' : 'Join Us';
   }
   updateNavBtn();
   window.addEventListener('resize', updateNavBtn);
 
-  // Signup
+  // Signup — submits to ConvertKit form 9340320
+  const CK_FORM_URL = 'https://app.kit.com/forms/9340320/subscriptions';
+
   function handleSignup(inputId, successId) {
     const input = document.getElementById(inputId);
     const success = document.getElementById(successId);
@@ -560,9 +563,24 @@ footer p { font-size: 0.58rem; color: rgba(247,243,238,0.11); }
       setTimeout(() => { input.style.outline = ''; input.placeholder = 'Your email address'; }, 2200);
       return;
     }
+
     const parent = input.closest('.hero-form, .final-form, .gift-form');
-    if (parent) parent.style.display = 'none';
-    success.style.display = 'block';
+    const button = parent ? parent.querySelector('button') : null;
+    const originalText = button ? button.textContent : '';
+    if (button) { button.disabled = true; button.textContent = 'Submitting…'; }
+
+    const formData = new FormData();
+    formData.append('email_address', email);
+
+    fetch(CK_FORM_URL, {
+      method: 'POST',
+      body: formData,
+      mode: 'no-cors'
+    }).finally(function() {
+      if (parent) parent.style.display = 'none';
+      success.style.display = 'block';
+      if (button) { button.disabled = false; button.textContent = originalText; }
+    });
   }
 
   // Gift toggle
